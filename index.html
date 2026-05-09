@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#aa3bff" />
+
+    <title>Any Token Mint — Mint any ERC20 on any EVM network</title>
+    <meta
+      name="description"
+      content="A wallet-connected test dApp to mint any ERC20 token on any EVM network. Connect with RainbowKit, paste the token contract address, amount and recipient — the app simulates and submits the mint() call."
+    />
+    <meta
+      name="keywords"
+      content="ERC20, mint, dApp, Ethereum, EVM, wagmi, viem, RainbowKit, token, blockchain, web3"
+    />
+    <meta name="robots" content="index,follow" />
+    <meta name="author" content="Any Token Mint" />
+
+    <link rel="canonical" href="https://mint.vanishcode.com/" />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/favicon.svg" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Any Token Mint" />
+    <meta property="og:title" content="Any Token Mint — Mint any ERC20 on any EVM network" />
+    <meta
+      property="og:description"
+      content="Connect a wallet, paste a token contract, mint to any address. Works on every EVM network your wallet supports."
+    />
+    <meta property="og:url" content="https://mint.vanishcode.com/" />
+    <meta property="og:image" content="https://mint.vanishcode.com/favicon.svg" />
+    <meta property="og:locale" content="en_US" />
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Any Token Mint — Mint any ERC20 on any EVM network" />
+    <meta
+      name="twitter:description"
+      content="Connect a wallet, paste a token contract, mint to any address. Works on every EVM network your wallet supports."
+    />
+    <meta name="twitter:image" content="https://mint.vanishcode.com/favicon.svg" />
+
+    <!-- Structured data: WebApplication -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Any Token Mint",
+        "description": "A wallet-connected dApp to mint any ERC20 token on any EVM network.",
+        "url": "https://mint.vanishcode.com/",
+        "applicationCategory": "FinanceApplication",
+        "browserRequirements": "Requires JavaScript and a Web3 wallet (e.g. MetaMask, Rainbow, WalletConnect).",
+        "operatingSystem": "Any",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+      }
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <noscript>
+      <h1>Any Token Mint</h1>
+      <p>
+        Any Token Mint is a wallet-connected dApp for minting any ERC20 token on any EVM network.
+        Connect a wallet (MetaMask, Rainbow, WalletConnect), paste the token contract address,
+        amount and recipient — the app simulates the call and submits the
+        <code>mint(address,uint256)</code> transaction.
+      </p>
+      <p>This application requires JavaScript to run.</p>
+    </noscript>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

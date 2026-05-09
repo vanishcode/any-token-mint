@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://mint.vanishcode.com/sitemap.xml
