@@ -7,7 +7,7 @@ your wallet is currently on.
 
 > Live: <https://mint.vanishcode.com>
 
-![screenshot](./mint.png)
+![screenshot](./screenshot.png)
 
 ## Stack
 
