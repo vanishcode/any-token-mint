@@ -1,73 +1,76 @@
-# React + TypeScript + Vite
+# Any Token Mint
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A wallet-connected test dApp for minting any ERC20 token on any EVM network.
+Connect a wallet, paste a token contract address, an amount, and a recipient —
+the app simulates and submits a `mint(address,uint256)` call on whatever chain
+your wallet is currently on.
 
-Currently, two official plugins are available:
+> Live: <https://mint.vanishcode.com>
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+![screenshot](./mint.png)
 
-## React Compiler
+## Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Vite 8** + **React 19** + **TypeScript 6**
+- **wagmi v2** + **viem** + **RainbowKit** for wallet + chain plumbing
+- **Biome** for lint + format, **Lefthook** for git hooks
+- **pnpm** for package management
 
-## Expanding the ESLint configuration
+Every chain exported by `wagmi/chains` is registered, so the form follows
+whatever network the connected wallet switches to. There is no in-app network
+selector by design.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Getting started
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+```bash
+# 1. configure WalletConnect — get a project ID at https://cloud.reown.com
+cp .env.example .env
+# then fill in VITE_WC_PROJECT_ID
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+# 2. install + run
+pnpm install
+pnpm dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Scripts
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+| Command          | What it does                                           |
+| ---------------- | ------------------------------------------------------ |
+| `pnpm dev`       | Vite dev server with HMR                               |
+| `pnpm build`     | `tsc -b` (project references) then `vite build`        |
+| `pnpm preview`   | Serve the production build locally                     |
+| `pnpm lint`      | `biome check .`                                        |
+| `pnpm format`    | `biome format --write .`                               |
+| `pnpm typecheck` | `tsc -b --noEmit`                                      |
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+`pnpm install` also installs Lefthook hooks (pre-commit runs Biome on staged
+files plus a project-wide `tsc --noEmit`).
+
+## How it works
+
+1. `useAccount()` exposes the connected wallet's `address`, `chain`, and `chainId`.
+2. When the user enters a token address, `useReadContract` fetches `decimals()`
+   and `symbol()` from that contract on the current chain.
+3. Amount input is converted to base units with `parseUnits(amount, decimals)`.
+4. `useSimulateContract` runs a dry call against `mint(to, amount)`. Revert
+   reasons (e.g. *caller is not the minter*, *function does not exist*) surface
+   in the hint line below the submit button before any transaction is signed.
+5. On submit, the simulated request is handed to `useWriteContract`, then
+   `useWaitForTransactionReceipt` watches the hash to confirmation.
+
+The hint line under the **Mint Tokens** button is always populated when the
+button is disabled — it tells the user exactly which precondition is missing
+("Reading token info…", "Could not read token on Polygon — make sure the
+address is an ERC20 deployed on this network", etc.).
+
+## Notes
+
+- Mainnet reads are routed through a fallback of
+  `publicnode.com → cloudflare-eth.com → rpc.ankr.com` because viem's default
+  `eth.merkle.io` endpoint is unreliable. Other chains use viem defaults; if
+  you hit RPC errors on a specific chain, add it to the `transports` map in
+  [`src/wagmi.ts`](./src/wagmi.ts).
+- `mint(address,uint256)` is one of several common mint signatures. Tokens that
+  expose a different signature (e.g. `mint(uint256)` for the caller, or
+  `mintTo(...)`) won't work without editing `ERC20_ABI` in
+  [`src/App.tsx`](./src/App.tsx).
