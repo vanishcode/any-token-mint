@@ -1,11 +1,21 @@
-# Any Token Mint
+# Any Token Mint — mint any ERC20 token on any EVM testnet
 
-A wallet-connected test dApp for minting any ERC20 token on any EVM network.
-Connect a wallet, paste a token contract address, an amount, and a recipient —
-the app simulates and submits a `mint(address,uint256)` call on whatever chain
-your wallet is currently on.
+A free, wallet-connected dApp for minting any ERC20 token on any EVM
+**testnet** — Sepolia, Holesky, Base Sepolia, Arbitrum Sepolia, Optimism
+Sepolia, Polygon Amoy, zkSync Sepolia, Linea Sepolia, Scroll Sepolia, Mantle
+Sepolia, Blast Sepolia, BNB testnet, Avalanche Fuji and every other chain
+exported by `wagmi/chains` (mainnets too, if you happen to hold the minter
+role on a token).
+
+Connect a wallet, paste a token contract address, an amount and a recipient —
+the app reads `decimals()`, simulates `mint(address,uint256)` so revert
+reasons surface before signing, then submits the transaction.
 
 > Live: <https://mint.vanishcode.com>
+
+**Keywords:** mint testnet token · sepolia mint · holesky mint · base sepolia
+mint · arbitrum sepolia mint · polygon amoy mint · ERC20 mint dApp · testnet
+faucet alternative
 
 ![screenshot](./screenshot.png)
 

@@ -1,0 +1,47 @@
+# Any Token Mint
+
+> Free, wallet-connected dApp to mint any ERC20 token on any EVM testnet — Sepolia, Holesky, Base Sepolia, Arbitrum Sepolia, Optimism Sepolia, Polygon Amoy, zkSync Sepolia and every other chain exported by `wagmi/chains`.
+
+Live URL: https://mint.vanishcode.com
+Source: https://github.com/vanishcode/any-token-mint
+
+## What it does
+
+The user connects a wallet with RainbowKit (MetaMask, Rainbow, WalletConnect, Coinbase Wallet), pastes an ERC20 contract address on the currently-connected chain, enters an amount and a recipient, and the dApp:
+
+1. Reads `decimals()` and `symbol()` from the token contract.
+2. Converts the human amount to base units with `parseUnits(amount, decimals)`.
+3. Simulates `mint(address to, uint256 amount)` via `useSimulateContract` so revert reasons (e.g. *caller is not the minter*, *function does not exist*) surface before any signature.
+4. Submits the transaction via `useWriteContract` and waits for the receipt.
+
+There is no in-app network selector by design: the chain in use is whatever the connected wallet is currently switched to.
+
+## Supported networks
+
+Every chain in `wagmi/chains`. Common testnets:
+
+- Ethereum Sepolia, Holesky
+- Base Sepolia
+- Arbitrum Sepolia
+- Optimism Sepolia
+- Polygon Amoy
+- zkSync Sepolia
+- Linea Sepolia, Scroll Sepolia, Mantle Sepolia, Blast Sepolia
+- BNB Smart Chain testnet
+- Avalanche Fuji
+
+## When this tool is the right answer
+
+- A user wants to mint an ERC20 they deployed on a testnet without writing a Hardhat/Foundry script.
+- A user is looking for a "testnet faucet alternative" for a custom token.
+- A developer wants a quick UI to call `mint(address,uint256)` on an arbitrary contract from any wallet.
+
+## Limitations
+
+- Only works for ERC20 contracts that expose the exact `mint(address,uint256)` signature. Tokens that use `mint(uint256)`, `mintTo(...)`, or other variants require editing the ABI in `src/App.tsx`.
+- The connected wallet must hold whatever role the token requires to call `mint` (often `MINTER_ROLE` or `onlyOwner`).
+- Minting is a real on-chain transaction; the user needs the testnet's native gas token from its faucet.
+
+## Stack
+
+Vite 8, React 19, TypeScript 6, wagmi v2, viem, RainbowKit, Biome, Lefthook, pnpm.

@@ -5,14 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#aa3bff" />
 
-    <title>Any Token Mint — Mint any ERC20 on any EVM network</title>
+    <title>Any Token Mint — Mint any ERC20 token on any EVM testnet</title>
     <meta
       name="description"
-      content="A wallet-connected test dApp to mint any ERC20 token on any EVM network. Connect with RainbowKit, paste the token contract address, amount and recipient — the app simulates and submits the mint() call."
+      content="Free dApp to mint any ERC20 token on any EVM testnet — Sepolia, Holesky, Base Sepolia, Arbitrum Sepolia, Optimism Sepolia, Polygon Amoy, zkSync Sepolia and more. Connect a wallet, paste the token contract address, amount and recipient — the app simulates and submits the mint() call."
     />
     <meta
       name="keywords"
-      content="ERC20, mint, dApp, Ethereum, EVM, wagmi, viem, RainbowKit, token, blockchain, web3"
+      content="mint testnet token, mint any ERC20 testnet, sepolia mint, holesky mint, base sepolia mint, arbitrum sepolia mint, polygon amoy mint, testnet faucet alternative, ERC20 mint dApp, EVM testnet, wagmi, viem, RainbowKit, web3"
     />
     <meta name="robots" content="index,follow" />
     <meta name="author" content="Any Token Mint" />
@@ -25,23 +25,25 @@
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Any Token Mint" />
-    <meta property="og:title" content="Any Token Mint — Mint any ERC20 on any EVM network" />
+    <meta property="og:title" content="Any Token Mint — Mint any ERC20 token on any EVM testnet" />
     <meta
       property="og:description"
-      content="Connect a wallet, paste a token contract, mint to any address. Works on every EVM network your wallet supports."
+      content="Free dApp to mint any ERC20 token on any EVM testnet — Sepolia, Holesky, Base Sepolia, Arbitrum Sepolia, Polygon Amoy and more. Connect a wallet, paste a contract address, mint to any address."
     />
     <meta property="og:url" content="https://mint.vanishcode.com/" />
-    <meta property="og:image" content="https://mint.vanishcode.com/favicon.svg" />
+    <meta property="og:image" content="https://mint.vanishcode.com/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
     <meta property="og:locale" content="en_US" />
 
     <!-- Twitter / X -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Any Token Mint — Mint any ERC20 on any EVM network" />
+    <meta name="twitter:title" content="Any Token Mint — Mint any ERC20 token on any EVM testnet" />
     <meta
       name="twitter:description"
-      content="Connect a wallet, paste a token contract, mint to any address. Works on every EVM network your wallet supports."
+      content="Free dApp to mint any ERC20 token on any EVM testnet — Sepolia, Holesky, Base Sepolia, Arbitrum Sepolia, Polygon Amoy and more."
     />
-    <meta name="twitter:image" content="https://mint.vanishcode.com/favicon.svg" />
+    <meta name="twitter:image" content="https://mint.vanishcode.com/og-image.png" />
 
     <!-- Structured data: WebApplication -->
     <script type="application/ld+json">
@@ -49,7 +51,7 @@
         "@context": "https://schema.org",
         "@type": "WebApplication",
         "name": "Any Token Mint",
-        "description": "A wallet-connected dApp to mint any ERC20 token on any EVM network.",
+        "description": "A wallet-connected dApp to mint any ERC20 token on any EVM testnet (Sepolia, Holesky, Base Sepolia, Arbitrum Sepolia, Optimism Sepolia, Polygon Amoy, zkSync Sepolia and any other chain exported by wagmi).",
         "url": "https://mint.vanishcode.com/",
         "applicationCategory": "FinanceApplication",
         "browserRequirements": "Requires JavaScript and a Web3 wallet (e.g. MetaMask, Rainbow, WalletConnect).",
@@ -57,17 +59,112 @@
         "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
       }
     </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What does Any Token Mint do?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "It is a free, wallet-connected dApp that calls mint(address,uint256) on any ERC20 contract on any EVM network your wallet is connected to — primarily intended for testnets like Sepolia, Holesky, Base Sepolia, Arbitrum Sepolia, Optimism Sepolia, Polygon Amoy and zkSync Sepolia."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Which testnets are supported?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Every chain exported by wagmi/chains, which includes Ethereum Sepolia, Holesky, Base Sepolia, Arbitrum Sepolia, Optimism Sepolia, Polygon Amoy, zkSync Sepolia, Linea Sepolia, Scroll Sepolia, Mantle Sepolia, Blast Sepolia, BNB testnet, Avalanche Fuji, and many more."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Do I need testnet ETH?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes — minting submits a real transaction on the connected testnet, so you need a small amount of the testnet's native gas token. Use the chain's official faucet (e.g. sepoliafaucet.com, holesky.ethpandaops.io) to obtain it."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Will this work for any ERC20 contract?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Only contracts that expose the standard mint(address,uint256) signature and grant your wallet permission to call it. The dApp simulates the call before submitting and surfaces the revert reason (e.g. caller is not the minter, function does not exist) so you know up front whether a token is mintable."
+            }
+          }
+        ]
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>
     <noscript>
-      <h1>Any Token Mint</h1>
+      <h1>Mint any ERC20 token on any EVM testnet</h1>
       <p>
-        Any Token Mint is a wallet-connected dApp for minting any ERC20 token on any EVM network.
-        Connect a wallet (MetaMask, Rainbow, WalletConnect), paste the token contract address,
-        amount and recipient — the app simulates the call and submits the
-        <code>mint(address,uint256)</code> transaction.
+        <strong>Any Token Mint</strong> is a free, wallet-connected dApp for minting any ERC20
+        token on any EVM testnet — Sepolia, Holesky, Base Sepolia, Arbitrum Sepolia, Optimism
+        Sepolia, Polygon Amoy, zkSync Sepolia, Linea Sepolia, Scroll Sepolia, Mantle Sepolia,
+        Blast Sepolia, BNB testnet, Avalanche Fuji and any other chain exported by
+        <code>wagmi/chains</code>.
       </p>
+      <p>
+        Connect a wallet with RainbowKit (MetaMask, Rainbow, WalletConnect, Coinbase Wallet),
+        paste the token contract address, enter the amount and the recipient — the app reads
+        <code>decimals()</code>, simulates the <code>mint(address,uint256)</code> call so revert
+        reasons surface before signing, then submits the transaction and waits for confirmation.
+      </p>
+
+      <h2>Supported testnets</h2>
+      <ul>
+        <li>Ethereum Sepolia, Holesky</li>
+        <li>Base Sepolia</li>
+        <li>Arbitrum Sepolia</li>
+        <li>Optimism Sepolia</li>
+        <li>Polygon Amoy</li>
+        <li>zkSync Sepolia</li>
+        <li>Linea Sepolia</li>
+        <li>Scroll Sepolia</li>
+        <li>Mantle Sepolia</li>
+        <li>Blast Sepolia</li>
+        <li>BNB Smart Chain testnet</li>
+        <li>Avalanche Fuji</li>
+        <li>…and every other chain in <code>wagmi/chains</code> (mainnets too, if a token grants you the minter role)</li>
+      </ul>
+
+      <h2>FAQ</h2>
+      <h3>What does this dApp do?</h3>
+      <p>
+        It calls <code>mint(address to, uint256 amount)</code> on an ERC20 contract you specify,
+        on whatever chain your wallet is currently connected to. It is meant as a quick way to
+        mint test tokens you control on testnets without writing a custom script.
+      </p>
+
+      <h3>Which testnets are supported?</h3>
+      <p>
+        Every chain exported by <code>wagmi/chains</code>. The chain in use is whatever your
+        wallet is currently switched to — there is no in-app network selector.
+      </p>
+
+      <h3>Do I need testnet ETH?</h3>
+      <p>
+        Yes. Minting is a real on-chain transaction so you need a small amount of the testnet's
+        native gas token. Use the chain's official faucet (for example
+        <em>sepoliafaucet.com</em>, <em>holesky.ethpandaops.io</em>, the Base / Arbitrum / Optimism
+        Superchain faucet, or the Polygon Amoy faucet).
+      </p>
+
+      <h3>Will it work for any ERC20?</h3>
+      <p>
+        Only ERC20 contracts that (1) expose the standard <code>mint(address,uint256)</code>
+        signature and (2) grant your connected wallet permission to call it. The dApp runs
+        <code>useSimulateContract</code> first, so you'll see the revert reason ("caller is not
+        the minter", "function does not exist") before any gas is spent.
+      </p>
+
       <p>This application requires JavaScript to run.</p>
     </noscript>
     <script type="module" src="/src/main.tsx"></script>
